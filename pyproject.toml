@@ -7,6 +7,8 @@ authors = ["PyDrummer <anthonybeavermusic@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.9"
 Faker = "^6.1.1"
+pytest-watch = "^4.2.0"
+coverage = "^5.4"
 
 
 [tool.poetry.dev-dependencies]
