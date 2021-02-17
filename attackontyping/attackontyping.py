@@ -1,7 +1,5 @@
 
 
-
-
 class Game:
     def __init__(self):
         self.lives = 3
@@ -30,15 +28,33 @@ class Game:
 
 
     def rules(self):
-        pass
+        print("[1] Brief introduction")
+        print("[0] Lets go to About-us page")
+
+    rules(self= None)
+    option = int(input("inter index number: "))
+
+    green = '\033[32;1;40m'
+    # print(green + 'Game Rules')
+    txt = 'Game Rules'
+    center_txt = txt.center(110)
+    print(green + center_txt)
 
 
+    while option != 0:
+        if option == 1:
+            print("""
+                    Brief introduction:
 
-
-
-
-
-
+            what the object of the game is and perhaps a funny intro to the game for party games
+            """)
+        else:
+            print("lets go to About-us page")
+        # pass
+        print()
+        rules(self=None)
+        option = int(input("inter Names index number you chose: "))
+        print()
 
 
     def about_us(self):
@@ -51,48 +67,51 @@ class Game:
     about_us(self= None)
     option = int(input("inter index number: "))
 
+ 
     green = '\033[32;1;40m'
-    print(green + 'about us')
+    txt = 'About Us'
+    center_txt = txt.center(110)
+    print(green + center_txt )
 
     while option != 0:
         # green = '\033[32;1;40m'
         # print(green + 'about us')
         if option == 1:
             print("""
-            ##################################################################################################################################################################################
-                       Anthony Beaver:
+#################################################################################################################################################################################
+        Anthony Beaver:
 
-            My about me: "Anthony Beaver is a full stack software developer from Seattle Washington.Passionate about problem solving and playing the drums! Looking to change the world one syntax error at a time..
+My about me: "Anthony Beaver is a full stack software developer from Seattle Washington.Passionate about problem solving and playing the drums! Looking to change the world one syntax error at a time..
 
-            ##################################################################################################################################################################################
+#################################################################################################################################################################################
             """) 
         elif option == 2:
             print("""
-            ##################################################################################################################################################################################
-                       Nick Dorkins:
+#################################################################################################################################################################################
+            Nick Dorkins:
 
-            Software Developer with a background in Specialized Industrial Safety, and fabrication. Enjoy's traveling and spending time with family and puppies. Favorite things to do outside quarantine are going to Disney parks and playing Magic the Gathering.
+Software Developer with a background in Specialized Industrial Safety, and fabrication. Enjoy's traveling and spending time with family and puppies. Favorite things to do outside quarantine are going to Disney parks and playing Magic the Gathering.
 
-            ##################################################################################################################################################################################
+#################################################################################################################################################################################
             """)
         elif option == 3:
             print("""
-            ##################################################################################################################################################################################
-                       Logan Jones:
+#################################################################################################################################################################################
+            Logan Jones:
 
-            Logan Jones is a former product manager and current software engineer. She is a skilled problem solver who loves cats, taco bell, and world of warcraft..
+Logan Jones is a former product manager and current software engineer. She is a skilled problem solver who loves cats, taco bell, and world of warcraft..
 
-            ##################################################################################################################################################################################
+#################################################################################################################################################################################
 
             """)
         elif option == 4:
             print("""
-            ##################################################################################################################################################################################
-                       Nebiuy Kifle:
+#################################################################################################################################################################################
+            Nebiuy Kifle:
 
-            Hello My name is Nebiyu kifle. I am a professional and highly motivated software engineer.I have a background on marketing and logistics management for about 6 years back home in Ethiopia. I used to also have my own business.  I have worked on multiple projects and have a broad experience in software development at code fellows. I am passionate about to learn new think in techs industry. I would love the opportunity to put my experience at tech company. I am currently looking for a new role that will utilize my skills and experience and take my career to the next level.
+Hello My name is Nebiyu kifle. I am a professional and highly motivated software engineer.I have a background on marketing and logistics management for about 6 years back home in Ethiopia. I used to also have my own business.  I have worked on multiple projects and have a broad experience in software development at code fellows. I am passionate about to learn new think in techs industry. I would love the opportunity to put my experience at tech company. I am currently looking for a new role that will utilize my skills and experience and take my career to the next level.
 
-            ##################################################################################################################################################################################
+#################################################################################################################################################################################
             """)
         else:
             print("lets go to next step")
@@ -166,21 +185,10 @@ class Game:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 if __name__ == '__main__':
     game = Game()
     game.menu_selection()
-    # game.about_us()
+    game.rules()
     game.about_us()
     
 
