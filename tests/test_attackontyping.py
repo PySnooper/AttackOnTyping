@@ -1,5 +1,5 @@
 from attackontyping import __version__
-from attackontyping.attackontyping import Timer
+from attackontyping.timer import Timer
 # import pytest
 import time
 
