@@ -5,9 +5,20 @@ from timer import Timer
 
 
 class Game:
+    # Class variables / Mode dictionaries:
+    # easy_mode = {descr: "EASY MODE", words: 1, seconds: "15", struct: "words"}
+    # med_mode = {descr: "MEDIUM MODE", words: 3, seconds: "15", struct: "words"}
+    # hard_mode = {descr: "HARD MODE", words: 3, seconds: "15", struct: "sentences", sentences : 1}
+    # ext_mode = {descr: "HARD MODE", words: 3, seconds: "15", struct: "sentences", sentences : 1}
+
     def __init__(self):
         self.lives = 3
         self.points = 0
+        self.easy_mode = {"descr": "EASY MODE", "words": 1, "seconds": "15", "struct": "words"}
+        self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
+        self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
+        self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "15", "struct": "sentences", "sentences" : 3}
+
 
     @staticmethod
     def print_welcome():
@@ -58,7 +69,7 @@ class Game:
 # GAME LOGIC STUFF #
 
     # Calcuation logic:
-    def calc_score(self, user_time, time_allowed, points):
+    def end_round(self, user_time, time_allowed, points):
         if user_time < time_allowed:
             self.points += points
             print(f'Great work! You have {self.points} points! \n')
@@ -66,31 +77,34 @@ class Game:
             time.sleep(2)
         else:
             print('')
-            print('Try again')
             self.lives -= 1
-            print(f'Lives left: {self.lives}!')
-            time.sleep(2)
+            if self.lives > 0:
+                print('Try again')
+                print(f'Lives left: {self.lives}!')
+                print('')
+                time.sleep(2)
 
-
+    # Adventure game loop conditionals:
     def play_game(self):
         while self.points < 20 and self.lives > 0:
-            user_time = self.start_easy_round()
+            self.difficulty = 'Easy'
+            user_time = self.start_round(self.easy_mode)
             # Easy mode: time allowed is 10, points per round 5
-            self.calc_score(user_time, 15, 10)
+            self.end_round(user_time, 15, 10)
             
         while self.points < 40 and self.lives > 0:
             # Med round: time allowed is 10, points per round 10
-            user_time = self.start_med_round()
-            self.calc_score(user_time, 10, 10)
+            user_time = self.start_round(self.med_mode)
+            self.end_round(user_time, 10, 10)
 
         while self.points < 60 and self.lives > 0:
-            user_time = self.start_hard_round()
-            self.calc_score(user_time, 20, 10)
+            user_time = self.start_round(self.hard_mode)
+            self.end_round(user_time, 20, 10)
             # self.start_hard_round()
 
-        while self.lives > 0:
-            user_time = self.start_extreme_round()
-            self.calc_score(user_time, 25, 10)
+        while self.points >= 60 and self.lives > 0:
+            user_time = self.start_round(self.ext_mode)
+            self.end_round(user_time, 25, 10)
             # self.start_extreme_round()
 
         print(f'Game Over! You gained {self.points} points. \n Would you like to try again?')
@@ -101,114 +115,156 @@ class Game:
             self.play_game()
         if user_input == 'n':
             exit()
-
-
-    def start_easy_round(self):
-        timekeeper = Timer()
-        text = RandomText()
-        question = text.get_words(1)
-        print('EASY MODE!')
-        print("Type the following words within 15 seconds:")
-        print("-------------------------")
-        print(f'{question}')
-        print("-------------------------")
-        time.sleep(3)
-        print('Ready..?')
-        time.sleep(1)
-        timekeeper.start()
-        answer = input('Start!\n> ')
-        time_stop = timekeeper.stop()
-        print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
-
-        if answer != question:
-            time_stop = 100
-            return time_stop
-        return time_stop
-
-
-    def start_med_round(self):
-        timekeeper = Timer()
-        text = RandomText()
-        question = text.get_words(3)
-        print('MEDIUM MODE!')
-        print("Type the following sentence within 10 seconds:")
-        print("-------------------------")
-        print(f'{question}')
-        print("-------------------------")
-        time.sleep(3)
-        print('Ready..?')
-        time.sleep(1)
-        timekeeper.start()
-        answer = input('Start!\n> ')
-        time_stop = timekeeper.stop()
-        print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
-
-        if answer != question:
-            time_stop = 100
-            return time_stop
-        return time_stop
-
-
-    def start_hard_round(self):
-        timekeeper = Timer()
-        text = RandomText()
-        words = random.randrange(3, 5)
-        question = text.get_sentences(1, words)
-        print('HARD MODE!')
+   
+    # Print functions
+    @staticmethod
+    def print_hard_ascii():
         print('********************************************')
         print('You now have capital letters and punctuation')
         print('********************************************')
-        time.sleep(3)
-        print("Type the following sentence within 20 seconds:")
-        print("-------------------------")
-        print(f'{question}')
-        print("-------------------------")
-        time.sleep(3)
-        print('Ready..?')
-        time.sleep(1)
-        timekeeper.start()
-        answer = input('Start!\n> ')
-        time_stop = timekeeper.stop()
-        print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
 
-        if answer != question:
-            time_stop = 100
-            return time_stop
-        return time_stop
-
-
-    def start_extreme_round(self):
-        timekeeper = Timer()
-        text = RandomText()
-        words = random.randrange(3, 6)
-        sentence1 = text.get_sentences(1, words)
-        words = random.randrange(3, 6)
-        sentence2 = text.get_sentences(1, words)
-        words = random.randrange(3, 6)
-        sentence3 = text.get_sentences(1, words)
-        question = f'{sentence1} {sentence2} {sentence3}'
-        print('EXTREME MODE!')
+    @staticmethod
+    def print_ext_ascii():
         print('***********************************************************************')
         print('You now have capital letters, punctuation, and random length sentences!')
         print('***********************************************************************')
-        time.sleep(3)
-        print("Type the following sentence within 25 seconds:")
+
+    # Modular game round logic:
+    def start_round(self, mode):
+        timekeeper = Timer()
+        text = RandomText()
+        if mode["struct"] == 'words':
+            question = text.get_words(mode["words"])
+        if mode["struct"] == 'sentences':
+            question = text.get_sentences(mode["sentences"], mode["words"])
+        if mode["descr"] == "HARD MODE":
+                self.print_hard_ascii()
+        if mode["descr"] == "EXTREME MODE":
+            self.print_ext_ascii()
+        print(f'{mode["descr"]}, you will have {mode["seconds"]} seconds to type what you see next.')
+
+        #ascii art here:
+
+        input('Press enter to begin')
         print("-------------------------")
         print(f'{question}')
         print("-------------------------")
-        time.sleep(3)
-        print('Ready..?')
-        time.sleep(1)
         timekeeper.start()
-        answer = input('Start!\n> ')
+        answer = input('> ')
         time_stop = timekeeper.stop()
         print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
-
         if answer != question:
             time_stop = 100
             return time_stop
         return time_stop
-        
+
+    ### OLD LOGIC:
+    # def start_easy_round(self):
+    #     timekeeper = Timer()
+    #     text = RandomText()
+    #     question = text.get_words(1)
+    #     print('EASY MODE!')
+    #     print("Type the following words within 15 seconds:")
+    #     print("-------------------------")
+    #     print(f'{question}')
+    #     print("-------------------------")
+    #     time.sleep(3)
+    #     print('Ready..?')
+    #     time.sleep(1)
+    #     timekeeper.start()
+    #     answer = input('Start!\n> ')
+    #     time_stop = timekeeper.stop()
+    #     print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
+
+    #     if answer != question:
+    #         time_stop = 100
+    #         return time_stop
+    #     return time_stop
+
+
+    # def start_med_round(self):
+    #     timekeeper = Timer()
+    #     text = RandomText()
+    #     question = text.get_words(3)
+    #     print('MEDIUM MODE!')
+    #     print("Type the following sentence within 10 seconds:")
+    #     print("-------------------------")
+    #     print(f'{question}')
+    #     print("-------------------------")
+    #     time.sleep(3)
+    #     print('Ready..?')
+    #     time.sleep(1)
+    #     timekeeper.start()
+    #     answer = input('Start!\n> ')
+    #     time_stop = timekeeper.stop()
+    #     print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
+
+    #     if answer != question:
+    #         time_stop = 100
+    #         return time_stop
+    #     return time_stop
+
+
+    # def start_hard_round(self):
+    #     timekeeper = Timer()
+    #     text = RandomText()
+    #     words = random.randrange(3, 5)
+    #     question = text.get_sentences(1, words)
+    #     print('HARD MODE!')
+    #     print('********************************************')
+    #     print('You now have capital letters and punctuation')
+    #     print('********************************************')
+    #     time.sleep(3)
+    #     print("Type the following sentence within 20 seconds:")
+    #     print("-------------------------")
+    #     print(f'{question}')
+    #     print("-------------------------")
+    #     time.sleep(3)
+    #     print('Ready..?')
+    #     time.sleep(1)
+    #     timekeeper.start()
+    #     answer = input('Start!\n> ')
+    #     time_stop = timekeeper.stop()
+    #     print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
+
+    #     if answer != question:
+    #         time_stop = 100
+    #         return time_stop
+    #     return time_stop
+
+
+    # def start_extreme_round(self):
+    #     timekeeper = Timer()
+    #     text = RandomText()
+    #     words = random.randrange(3, 6)
+    #     sentence1 = text.get_sentences(1, words)
+    #     words = random.randrange(3, 6)
+    #     sentence2 = text.get_sentences(1, words)
+    #     words = random.randrange(3, 6)
+    #     sentence3 = text.get_sentences(1, words)
+    #     question = f'{sentence1} {sentence2} {sentence3}'
+    #     print('EXTREME MODE!')
+    #     print('***********************************************************************')
+    #     print('You now have capital letters, punctuation, and random length sentences!')
+    #     print('***********************************************************************')
+    #     time.sleep(3)
+    #     print("Type the following sentence within 25 seconds:")
+    #     print("-------------------------")
+    #     print(f'{question}')
+    #     print("-------------------------")
+    #     time.sleep(3)
+    #     print('Ready..?')
+    #     time.sleep(1)
+    #     timekeeper.start()
+    #     answer = input('Start!\n> ')
+    #     time_stop = timekeeper.stop()
+    #     print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
+
+        # if answer != question:
+        #     time_stop = 100
+        #     return time_stop
+        # return time_stop
+    
     # def start_ludacris_round(self):
     #     timekeeper = Timer()
     #     text = RandomText()
