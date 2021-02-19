@@ -8,7 +8,6 @@ from timer import Timer
 from ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
 from about import logan, anthony, nick, nebiyu
 
-# Function for clearing the console:
 clear = lambda: os.system('clear')
 
 class Game:
@@ -21,6 +20,9 @@ class Game:
         self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
         self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "25", "struct": "sentences", "sentences" : 3}
 
+    def reset_game(self):
+        self.lives = 3
+        self.points = 0
 
     @staticmethod
     def print_welcome():
@@ -82,9 +84,6 @@ class Game:
         input("\nPress enter to go back")
         self.menu_selection()
 
-
-# GAME LOGIC STUFF #
-    # Calcuation logic:
     def end_round(self, user_time, time_allowed, points):
         if user_time < time_allowed:
             self.points += points
@@ -97,16 +96,15 @@ class Game:
             self.lives -= 1
             if self.lives > 0:
                 print('Try again')
-                print(f'Lives left: {self.lives}!')
+                self.print_lives()
                 print('')
                 time.sleep(2)
                 clear()
 
-    # Adventure game loop conditionals:
     def play_game(self):
         clear()
+        self.reset_game()
         while self.points < 20 and self.lives > 0:
-            self.difficulty = 'Easy'
             user_time = self.start_round(self.easy_mode)
             # Easy mode: time allowed is 10, points per round 5
             self.end_round(user_time, 15, 10)
@@ -129,17 +127,20 @@ class Game:
     def game_over(self, game_func):
         clear()
         game_over_ascii()
-        print(f'You gained {self.points} points. \n Would you like to try again?')
-        user_input = input('(Y)es or (N)o \n> ').lower()
+        print("You gained "
+        + Fore.MAGENTA
+        + str(self.points)
+        + Style.RESET_ALL
+        + " points. \n\nWould you like to try again?\n")
+        user_input = input('(Y)es or (N)o \n\n> ').lower()
         if user_input == 'y':
-            self.points = 0
-            self.lives = 3
             game_func()
         if user_input == 'n':
             self.menu_selection()
 
     def exhibition_game(self):
         clear()
+        self.reset_game()
         print('Here you will play one difficulty until you\'re out of lives. \n')
 
         user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
@@ -149,67 +150,25 @@ class Game:
             while self.lives > 0:
                 user_time = self.start_round(self.easy_mode)
                 self.end_round(user_time, 15, 10)   
-            # Game over stuff here:
-            clear()
-            game_over_ascii()
-            print(f'You gained {self.points} points. \n Would you like to try again?')
-            user_input = input('(Y)es or (N)o \n> ').lower()
-            if user_input == 'y':
-                self.points = 0
-                self.lives = 3
-                self.exhibition_game()
-            if user_input == 'n':
-                exit()   
+            self.game_over(self.exhibition_game)
         if user_input == 'm':
             while self.lives > 0:
                 user_time = self.start_round(self.med_mode)
                 self.end_round(user_time, 10, 10)  
-            # Game over stuff here:
-            clear()
-            game_over_ascii()
-            print(f'You gained {self.points} points. \n Would you like to try again?')
-            user_input = input('(Y)es or (N)o \n> ').lower()
-            if user_input == 'y':
-                self.points = 0
-                self.lives = 3
-                self.exhibition_game()
-            if user_input == 'n':
-                exit()   
+            self.game_over(self.exhibition_game) 
         if user_input == 'h':
             while self.lives > 0:
                 user_time = self.start_round(self.hard_mode)
                 self.end_round(user_time, 20, 10)
-            # Game over stuff here:
-            clear()
-            game_over_ascii()
-            print(f'You gained {self.points} points. \n Would you like to try again?')
-            user_input = input('(Y)es or (N)o \n> ').lower()
-            if user_input == 'y':
-                self.points = 0
-                self.lives = 3
-                self.exhibition_game()
-            if user_input == 'n':
-                exit()   
+            self.game_over(self.exhibition_game)
         if user_input == 'x':
             while self.lives > 0:
                 user_time = self.start_round(self.ext_mode)
                 self.end_round(user_time, 25, 10)
-            # Game over stuff here:
-            clear()
-            game_over_ascii()
-            print(f'You gained {self.points} points. \n Would you like to try again?')
-            user_input = input('(Y)es or (N)o \n> ').lower()
-            if user_input == 'y':
-                self.points = 0
-                self.lives = 3
-                self.exhibition_game()
-            if user_input == 'n':
-                exit()   
+            self.game_over(self.exhibition_game)
         if user_input == 'r':
-            clear()
             self.menu_selection()
         
-    # Print functions
     @staticmethod
     def print_hard_ascii():
         print('********************************************')
@@ -226,7 +185,6 @@ class Game:
             + Style.RESET_ALL)
         print('***********************************************************************\n')
     
-    # Modular game round logic:
     def start_round(self, mode):
         timekeeper = Timer()
         text = RandomText()
@@ -239,8 +197,8 @@ class Game:
         if mode["descr"] == "EXTREME MODE":
             self.print_ext_ascii()
 
-        # Printing the red hearts representing the player's lives:
-        print('LIVES: ' + Fore.RED + f'{lives() * self.lives}' + Style.RESET_ALL)
+        self.print_lives()
+        self.print_points()
         if mode['descr'] == 'EASY MODE':
             easy_ascii()
         if mode['descr'] == 'MEDIUM MODE':
@@ -252,16 +210,19 @@ class Game:
 
         print(f'You will have {mode["seconds"]} seconds to type what you see next. \n')
 
-        #ascii art here:
         dash_creator = lambda: print("-" * len(question))
         input('Press enter to begin\n')
         dash_creator()
-        print(f'{question}')
+        print(Fore.CYAN + question + Style.RESET_ALL)
         dash_creator()
         timekeeper.start()
-        answer = input('> ')
+        answer = input('\n> ')
         time_stop = timekeeper.stop()
-        print(f"Elapsed time: {time_stop:0.4f} seconds, you typed: {answer}")
+        color = Fore.GREEN if answer == question else Fore.RED
+        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed: "
+            + color
+            + (answer or 'None')
+            + Style.RESET_ALL)
         if answer != question:
             time_stop = 100
             return time_stop
@@ -306,6 +267,18 @@ class Game:
                 self.about_us()
 
         about_us_menu()
+
+    def print_lives(self):
+        print('LIVES: ' 
+            + Fore.RED 
+            + f'{lives() * self.lives}' 
+            + Style.RESET_ALL)
+
+    def print_points(self):
+        print('POINTS: ' 
+            + Fore.MAGENTA 
+            + str(self.points) 
+            + Style.RESET_ALL)
 
 if __name__ == '__main__':
     game = Game()
