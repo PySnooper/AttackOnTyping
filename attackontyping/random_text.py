@@ -11,9 +11,9 @@ class RandomText:
         return words
 
 
-    def get_sentences(self, sentence_count, word_count):
+    def get_sentences(self, sentence_count, word_count, variable=False):
         sentences = []
         for _ in range(sentence_count):
-            sentences.append(self.fake.sentence(nb_words=word_count, variable_nb_words=False))
+            sentences.append(self.fake.sentence(nb_words=word_count, variable_nb_words=variable))
         text = ' '.join(sentences)
         return text
