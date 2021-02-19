@@ -14,3 +14,7 @@ def test_timer():
     actual = int(stopper)
     expected = 1
     assert actual == expected
+
+#  TODO  Test game methods
+#  TODO  Test Mode method
+#  TODO  Test Scoring method
