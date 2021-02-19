@@ -13,7 +13,7 @@ clear = lambda: os.system('clear')
 class Game:
 
     def __init__(self):
-        self.lives = 1
+        self.lives = 3
         self.points = 0
         self.easy_mode = {"descr": "EASY MODE", "words": 1, "seconds": "15", "struct": "words"}
         self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
@@ -101,12 +101,10 @@ class Game:
         while self.points < 60 and self.lives > 0:
             user_time = self.start_round(self.hard_mode)
             self.end_round(user_time, 20, 10)
-            # self.start_hard_round()
 
         while self.points >= 60 and self.lives > 0:
             user_time = self.start_round(self.ext_mode)
             self.end_round(user_time, 25, 10)
-            # self.start_extreme_round()
 
         # Game over stuff here:
         clear()
@@ -132,7 +130,7 @@ class Game:
         print('***********************************************************************')
         print('You now have capital letters, punctuation, and random length sentences!')
         print('***********************************************************************')
-
+    
     # Modular game round logic:
     def start_round(self, mode):
         timekeeper = Timer()
