@@ -18,7 +18,7 @@ class Game:
         self.easy_mode = {"descr": "EASY MODE", "words": 1, "seconds": "15", "struct": "words"}
         self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
         self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
-        self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "15", "struct": "sentences", "sentences" : 3}
+        self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "25", "struct": "sentences", "sentences" : 3}
 
 
     @staticmethod
@@ -40,13 +40,15 @@ class Game:
 
     def menu_selection(self):
         print("Welcome to Attack on Typing!")
-        play = 'Would you like to: \n(P)lay the game \n(R)ead the rules \n(D)ev Bios \n(Q)uit?'
+        play = 'Would you like to: \n(A)dventure Mode \n(E)xhibition Mode \n(R)ead the rules \n(D)ev Bios \n(Q)uit?'
         user_input = input(play + '\n'+ '> ').lower()
         
         if user_input == 'r':
             self.rules()
-        if user_input == 'p':
+        if user_input == 'a':
             self.play_game()
+        if user_input == 'e':
+            self.exhibition_game()
         if user_input == 'd':
             self.about_us()
         if user_input == 'q':
@@ -117,7 +119,83 @@ class Game:
             self.play_game()
         if user_input == 'n':
             exit()
-   
+    
+    def exhibition_game(self):
+        clear()
+        print('Here you will play one difficulty until you\'re out of lives. \n')
+
+        user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
+        clear()
+        print('Play until you run out of lives.')
+        if user_input == 'e':
+            while self.lives > 0:
+                user_time = self.start_round(self.easy_mode)
+                self.end_round(user_time, 15, 10)   
+            # Game over stuff here:
+            clear()
+            game_over_ascii()
+            print(f'You gained {self.points} points. \n Would you like to try again?')
+            user_input = input('(Y)es or (N)o \n> ').lower()
+            if user_input == 'y':
+                self.points = 0
+                self.lives = 3
+                self.exhibition_game()
+            if user_input == 'n':
+                exit()   
+        if user_input == 'm':
+            while self.lives > 0:
+                user_time = self.start_round(self.med_mode)
+                self.end_round(user_time, 10, 10)  
+            # Game over stuff here:
+            clear()
+            game_over_ascii()
+            print(f'You gained {self.points} points. \n Would you like to try again?')
+            user_input = input('(Y)es or (N)o \n> ').lower()
+            if user_input == 'y':
+                self.points = 0
+                self.lives = 3
+                self.exhibition_game()
+            if user_input == 'n':
+                exit()   
+        if user_input == 'h':
+            while self.lives > 0:
+                user_time = self.start_round(self.hard_mode)
+                self.end_round(user_time, 20, 10)
+            # Game over stuff here:
+            clear()
+            game_over_ascii()
+            print(f'You gained {self.points} points. \n Would you like to try again?')
+            user_input = input('(Y)es or (N)o \n> ').lower()
+            if user_input == 'y':
+                self.points = 0
+                self.lives = 3
+                self.exhibition_game()
+            if user_input == 'n':
+                exit()   
+        if user_input == 'x':
+            while self.lives > 0:
+                user_time = self.start_round(self.ext_mode)
+                self.end_round(user_time, 25, 10)
+            # Game over stuff here:
+            clear()
+            game_over_ascii()
+            print(f'You gained {self.points} points. \n Would you like to try again?')
+            user_input = input('(Y)es or (N)o \n> ').lower()
+            if user_input == 'y':
+                self.points = 0
+                self.lives = 3
+                self.exhibition_game()
+            if user_input == 'n':
+                exit()   
+        if user_input == 'r':
+            clear()
+            self.menu_selection()
+
+    
+    # def run_exh_game(self):
+    #     while self.lives > 0:
+    #         pass
+        
     # Print functions
     @staticmethod
     def print_hard_ascii():
