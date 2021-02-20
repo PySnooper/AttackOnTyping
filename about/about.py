@@ -1,8 +1,6 @@
 from colorama import Fore, Back, Style 
 import pyfiglet
 
-
-
 LOGAN_TEXT = """\
 Logan Jones is a former product manager and current
 software engineer. She is a skilled problem solver
@@ -64,9 +62,3 @@ def nick():
     print(Fore.MAGENTA + pyfiglet.figlet_format("Nick") + Style.RESET_ALL)
     print("*******************************")
     print('\n' + NICK_TEXT)
-
-
-logan()
-nebiyu()
-anthony()
-nick()
