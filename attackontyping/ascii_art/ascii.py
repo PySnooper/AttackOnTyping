@@ -2,7 +2,7 @@ from colorama import Fore, Back, Style
 import pyfiglet
 
 def welcome_message():
-    print(Fore.GREEN + """  █████╗ ████████╗████████╗ █████╗  ██████╗██╗  ██╗ 
+    return(Fore.GREEN + """  █████╗ ████████╗████████╗ █████╗  ██████╗██╗  ██╗ 
  ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝ 
  ███████║   ██║      ██║   ███████║██║     █████╔╝  
  ██╔══██║   ██║      ██║   ██╔══██║██║     ██╔═██╗  
@@ -37,20 +37,23 @@ def lives():
     return "♥ "
 
 def easy_ascii():
-    print("*************************** \n" + Fore.GREEN + pyfiglet.figlet_format("EASY") + Style.RESET_ALL + "***************************")
+    return ("*************************** \n" + Fore.GREEN + pyfiglet.figlet_format("EASY") + Style.RESET_ALL + "\n***************************")
     
 
 def med_ascii():
-    print("*************************************\n" + Fore.YELLOW + pyfiglet.figlet_format("MEDIUM") + Style.RESET_ALL + "*************************************") 
+    return("*************************************\n" + Fore.YELLOW + pyfiglet.figlet_format("MEDIUM") + Style.RESET_ALL + "*************************************") 
 
 def hard_ascii():
-    print("****************************\n" + Fore.RED + pyfiglet.figlet_format("HARD") + Style.RESET_ALL + "****************************")
+    return("****************************\n" + Fore.RED + pyfiglet.figlet_format("HARD") + Style.RESET_ALL + "****************************")
 
 def ext_ascii():
-    print("*********************************************************\n" + Fore.MAGENTA + pyfiglet.figlet_format("EXTREME ! !", 'slant') + Style.RESET_ALL + "*********************************************************")
+    return("*********************************************************\n" + Fore.MAGENTA + pyfiglet.figlet_format("EXTREME ! !", 'slant') + Style.RESET_ALL + "*********************************************************")
+
+def lud_ascii():
+    return("*********************************************************\n" + Fore.RED + pyfiglet.figlet_format("LUDACRIS ! !", 'slant') + Style.RESET_ALL + "*********************************************************")
 
 def game_over_ascii():
-    print(Fore.RED +"""
+    return(Fore.RED +"""
  ██████╗  █████╗ ███╗   ███╗███████╗  
 ██╔════╝ ██╔══██╗████╗ ████║██╔════╝  
 ██║  ███╗███████║██╔████╔██║█████╗    
@@ -67,18 +70,14 @@ def game_over_ascii():
  """ + Style.RESET_ALL)
 
 def dev_menu_art():
-    print("************************\n")
-    print(Fore.GREEN + pyfiglet.figlet_format("Devs") + Style.RESET_ALL)
-    print("************************\n")
+    return("************************\n" + Fore.GREEN + pyfiglet.figlet_format("Devs") + Style.RESET_ALL + "************************\n")
+    
 
 def rules_art():
-    print("************************\n")
-    print(Fore.GREEN + pyfiglet.figlet_format("Rules") + Style.RESET_ALL)
-    print("************************\n")
+    return("************************\n" + Fore.GREEN + pyfiglet.figlet_format("Rules") + Style.RESET_ALL + "************************\n")
 
 def thanks():
-    print(Fore.BLUE)
-    print("""\
+    return(Fore.BLUE + """\
     ████████╗██╗  ██╗ █████╗ ███╗   ██╗██╗  ██╗███████╗    
     ╚══██╔══╝██║  ██║██╔══██╗████╗  ██║██║ ██╔╝██╔════╝    
        ██║   ███████║███████║██╔██╗ ██║█████╔╝ ███████╗    
@@ -100,6 +99,5 @@ def thanks():
 ██║     ███████╗██║  ██║   ██║   ██║██║ ╚████║╚██████╔╝██╗ 
 ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝ 
                                                  
-    """)
-    print(Style.RESET_ALL)
+    """ + Style.RESET_ALL)
 thanks()

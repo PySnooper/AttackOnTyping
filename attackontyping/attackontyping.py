@@ -19,6 +19,7 @@ class Game:
         self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
         self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
         self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "25", "struct": "sentences", "sentences" : 3}
+        self.lud_mode = {"descr": "LUDACRIS MODE", "words": 10, "seconds": "60", "struct": "sentences", "sentences" : 10}
 
     def reset_game(self):
         self.lives = 3
@@ -27,12 +28,12 @@ class Game:
     @staticmethod
     def print_welcome():
         clear()
-        welcome_message()
+        print(welcome_message())
 
     @staticmethod
     def thanks_for_playing():
         clear()
-        thanks()
+        print(thanks())
         exit()
 
     def start_app(self):
@@ -71,16 +72,26 @@ class Game:
 
     def rules(self):
         clear()
-        rules_art()
+        print(rules_art())
+
         print(Fore.YELLOW 
         + "Adventure Mode:\n"
         + Style.RESET_ALL
-        + "Progress through Easy, Medium, Hard, and Extreme\ndifficulties by typing text as fast as you can! You'll lose a life if you type incorrectly or run out of time.\n\n")
+        + "This console typing game app to bringing you high quality, \nfun and interactive free typing games, our typing game has \nfour difficulty levels starting from easy mode – extreme mode \nit grows up progressively. The game also has real time scoreboard, \nand you can always see where you are at which mode. \n\nYou motivate some to type faster, type more accurately, and enjoy playing our typing games!!" + 
+        "\n\n- The game has 4 different difficulty levels easy-mode, medium-mode, hard-mode, and extremely-mode. Each level has 3 lives." + 
+        "\n\n- Player has access to choose and play any difficulty level." + 
+        "\n\n- If the player types and finished the words 3 times under each level at a given second got the score and transfer the next difficulty level. If not, the player gets a chance to play again." + 
+        "\n\n- Every player has always can see the score, lives and difficulty level too. \n\n")
+
+        # print(Fore.YELLOW 
+        # + "Adventure Mode:\n"
+        # + Style.RESET_ALL
+        # + "Progress through Easy, Medium, Hard, and Extreme\ndifficulties by typing text as fast as you can! \nYou'll start with 3 lives which are lost if you type incorrectly or run out of time. \n\n")
         
-        print(Fore.MAGENTA
-        + "Exhibition Mode:\n"
-        + Style.RESET_ALL
-        + "Start your game at a specific difficulty!")
+        # print(Fore.MAGENTA
+        # + "Exhibition Mode:\n"
+        # + Style.RESET_ALL
+        # + "Start your game at a specific difficulty and play that difficulty until you run out of lives!")
         input("\nPress enter to go back")
         self.menu_selection()
 
@@ -126,7 +137,7 @@ class Game:
     
     def game_over(self, game_func):
         clear()
-        game_over_ascii()
+        print(game_over_ascii())
         print("You gained "
         + Fore.MAGENTA
         + str(self.points)
@@ -166,6 +177,11 @@ class Game:
                 user_time = self.start_round(self.ext_mode)
                 self.end_round(user_time, 25, 10)
             self.game_over(self.exhibition_game)
+        if user_input == 'l':
+            while self.lives > 0:
+                user_time = self.start_round(self.lud_mode)
+                self.end_round(user_time, 60, 50)
+            self.game_over(self.exhibition_game)
         if user_input == 'r':
             self.menu_selection()
         
@@ -200,13 +216,13 @@ class Game:
         self.print_lives()
         self.print_points()
         if mode['descr'] == 'EASY MODE':
-            easy_ascii()
+            print(easy_ascii())
         if mode['descr'] == 'MEDIUM MODE':
-            med_ascii()
+            print(med_ascii())
         if mode['descr'] == 'HARD MODE':
-            hard_ascii()
+            print(hard_ascii())
         if mode['descr'] == 'EXTREME MODE':
-            ext_ascii()
+            print(ext_ascii())
 
         print(f'You will have {mode["seconds"]} seconds to type what you see next. \n')
 
@@ -231,7 +247,7 @@ class Game:
     def about_us(self):
         option = None
         clear()
-        dev_menu_art()
+        print(dev_menu_art())
 
         def about_us_menu():
             print("(1) Anthony Beaver")
