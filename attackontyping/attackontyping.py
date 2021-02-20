@@ -3,22 +3,10 @@ import random
 import os
 import pyfiglet
 from colorama import Fore, Back, Style
-
-# Uncomment to run app
-# from random_text import RandomText
-# from timer import Timer
-# from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
-# from about.about import logan, anthony, nick, nebiyu
-
-# # Uncomment for testing
-from attackontyping.random_text import RandomText
-from attackontyping.timer import Timer
-from attackontyping.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
-from attackontyping.about import logan, anthony, nick, nebiyu
-
-
-
-
+from random_text.random_text import RandomText
+from timer.timer import Timer
+from ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from about.about import logan, anthony, nick, nebiyu
 
 clear = lambda: os.system('clear')
 

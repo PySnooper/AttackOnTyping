@@ -1,4 +1,4 @@
-from attackontyping.random_text import RandomText
+from random_text.random_text import RandomText
 
 
 def test_get_words():
