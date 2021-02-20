@@ -37,13 +37,8 @@ def lives():
     return "♥ "
 
 def easy_ascii():
-    easy = \
-        "*************************** \n" \
-        + Fore.GREEN \
-        + pyfiglet.figlet_format("EASY") \
-        + Style.RESET_ALL \
-        + "\n***************************"
-    return easy
+    return ("*************************** \n" + Fore.GREEN + pyfiglet.figlet_format("EASY") + Style.RESET_ALL + "\n***************************")
+    
 
 def med_ascii():
     return("*************************************\n" + Fore.YELLOW + pyfiglet.figlet_format("MEDIUM") + Style.RESET_ALL + "*************************************") 
