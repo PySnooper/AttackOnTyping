@@ -1,6 +1,6 @@
 import pytest
 import time
-from attackontyping.timer import Timer, TimerError
+from timer.timer import Timer, TimerError
 
 def test_timer(timer):
     timer.start()
