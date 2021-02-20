@@ -22,7 +22,7 @@ def test_get_sentences():
 
 def test_get_variable_sentences():
     text = RandomText()
-    sentence_count = 2
+    sentence_count = 10
     word_count = 5
     sentence_list = text.get_sentences(sentence_count, word_count, True).split('. ')
     actual_sentence_count = len(sentence_list)
