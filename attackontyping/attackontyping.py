@@ -187,19 +187,22 @@ class Game:
         
     @staticmethod
     def print_hard_ascii():
-        print('********************************************')
-        print(Fore.YELLOW 
-            + 'You now have capital letters and punctuation'
-            + Style.RESET_ALL )
-        print('********************************************\n')
+        string = '********************************************\n' \
+            + Fore.YELLOW \
+            + 'You now have capital letters and punctuation\n' \
+            + Style.RESET_ALL \
+            + '********************************************\n'
+        print(string)
 
     @staticmethod
     def print_ext_ascii():
-        print('***********************************************************************')
-        print(Fore.YELLOW 
-            + 'You now have capital letters, punctuation, and random length sentences!'
-            + Style.RESET_ALL)
-        print('***********************************************************************\n')
+        string = '***********************************************************************' \
+            + Fore.YELLOW \
+            + 'You now have capital letters, punctuation, and random length sentences!' \
+            + Style.RESET_ALL \
+            + '***********************************************************************\n'
+        print(string)
+        
     
     def start_round(self, mode):
         timekeeper = Timer()

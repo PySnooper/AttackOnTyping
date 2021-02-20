@@ -1,9 +1,10 @@
 from attackontyping.attackontyping import Game
-import pytest 
+import pytest
+from colorama import Fore, Back, Style
+# import sys
 
 
-
-#  TODO  Test game methods
+#  TODO Test game methods
 
 def test_reset_game(game):
     game.lives = 100
@@ -12,15 +13,29 @@ def test_reset_game(game):
     assert game.lives == 3
     assert game.points == 0
 
-#  TODO  Test Mode method
 
-def test_easy_ascii(game):
-    pass
-    
-#  TODO  Test Scoring method
+def test_print_hard_ascii(capsys):
+    game = Game()
+    game.print_hard_ascii()
+    captured = capsys.readouterr()
+    string = '********************************************\n' \
+        + Fore.YELLOW \
+        + 'You now have capital letters and punctuation\n' \
+        + Style.RESET_ALL \
+        + '********************************************\n\n'
+    assert captured.out == string
 
-#  
+def test_print_ext_ascii(game, capsys):
+    game.print_ext_ascii()
+    captured = capsys.readouterr()
+    string = '***********************************************************************' \
+    + Fore.YELLOW \
+    + 'You now have capital letters, punctuation, and random length sentences!' \
+    + Style.RESET_ALL \
+    + '***********************************************************************\n' \
+    + '\n'
 
+    assert captured.out == string
 
 
 @pytest.fixture
