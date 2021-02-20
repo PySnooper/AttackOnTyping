@@ -30,3 +30,4 @@ def test_get_variable_sentences():
     words_match_count = all(count == word_count for count in words_per_sentence)
     assert not words_match_count
     assert actual_sentence_count == sentence_count
+
