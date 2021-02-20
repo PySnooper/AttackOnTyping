@@ -6,9 +6,15 @@ authors = ["PyDrummer <anthonybeavermusic@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+Faker = "^6.1.1"
+pytest = "^6.2.2"
+colorama = "^0.4.4"
+pyfiglet = "^0.8.post1"
+coverage = "^5.4"
+
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
