@@ -5,7 +5,7 @@ import pyfiglet
 from colorama import Fore, Back, Style
 from random_text.random_text import RandomText
 from timer.timer import Timer
-from ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
 from about.about import logan, anthony, nick, nebiyu
 
 clear = lambda: os.system('clear')
