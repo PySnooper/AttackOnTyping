@@ -16,26 +16,30 @@ class Game:
         self.lives = 3
         self.points = 0
         self.easy_mode = {"descr": "EASY MODE", "words": 1, "seconds": "15", "struct": "words"}
-        self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
+        self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words", }
         self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
         self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "25", "struct": "sentences", "sentences" : 3}
         self.lud_mode = {"descr": "LUDACRIS MODE", "words": 10, "seconds": "60", "struct": "sentences", "sentences" : 10}
+
 
     def reset_game(self):
         self.lives = 3
         self.points = 0
 
+    # Dont need for class
     @staticmethod
     def print_welcome():
         clear()
         print(welcome_message())
 
+    # Dont need for class
     @staticmethod
     def thanks_for_playing():
         clear()
         print(thanks())
         exit()
 
+    ## make this a stand alone function / Controller
     def start_app(self):
         clear()
         self.print_welcome()
@@ -44,6 +48,7 @@ class Game:
         clear()
         self.menu_selection()
 
+    # Dont need for class / Controller
     def menu_selection(self):
         clear()
         print("Welcome to " 
@@ -70,6 +75,7 @@ class Game:
             self.thanks_for_playing()
         self.menu_selection()
 
+    # dont need for class
     def rules(self):
         clear()
         print(rules_art())
@@ -95,6 +101,7 @@ class Game:
         input("\nPress enter to go back")
         self.menu_selection()
 
+    # Controller function / 
     def end_round(self, user_time, time_allowed, points):
         if user_time < time_allowed:
             self.points += points
@@ -112,6 +119,7 @@ class Game:
                 time.sleep(2)
                 clear()
 
+    # Controller
     def play_game(self):
         clear()
         self.reset_game()
@@ -135,6 +143,7 @@ class Game:
             
         self.game_over(self.play_game)
     
+    # Controller
     def game_over(self, game_func):
         clear()
         print(game_over_ascii())
