@@ -18,27 +18,58 @@ def test_lives():
     assert lives() == '♥ '
 
 def test_easy_ascii():
-    pass
+    actual = len(easy_ascii())
+    expected = 228
+    assert actual == expected
 
 
 def test_med_ascii():
-    pass
+    actual = len(med_ascii())
+    expected = 306
+    assert actual == expected
 
 
 def test_hard_ascii():
-    pass
+    actual = len(hard_ascii())
+    expected = 234
+    assert actual == expected
 
 
 
 def test_ext_ascii():
-    pass
+    actual = len(ext_ascii())
+    expected = 466
+    assert actual == expected
 
 
 def test_lud_ascii():
-    pass
+    actual = len(lud_ascii())
+    expected = 490
+    assert actual == expected
 
 
+def test_game_over_ascii():
+    actual = len(game_over_ascii())
+    expected = 484
+    assert actual == expected
 
+
+def test_dev_menu_art_ascii():
+    actual = len(dev_menu_art())
+    expected = 197
+    assert actual == expected
+
+
+def test_rules_art_ascii():
+    actual = len(rules_art())
+    expected = 215
+    assert actual == expected
+
+
+def test_thanks_ascii():
+    actual = len(thanks())
+    expected = 1263
+    assert actual == expected
 
 # @pytest.fixture
 

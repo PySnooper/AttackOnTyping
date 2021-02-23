@@ -38,7 +38,7 @@ def lives():
 
 def easy_ascii():
     return ("*************************** \n" + Fore.GREEN + pyfiglet.figlet_format("EASY") + Style.RESET_ALL + "\n***************************")
-    
+
 
 def med_ascii():
     return("*************************************\n" + Fore.YELLOW + pyfiglet.figlet_format("MEDIUM") + Style.RESET_ALL + "*************************************") 
