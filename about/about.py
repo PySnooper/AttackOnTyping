@@ -31,7 +31,7 @@ the world one syntax error at a time.
 
 NICK_TEXT = """\
 Nick Dorkins is a Software Developer with a background in Specialized
-Industrial Safety, and fabrication. Enjoy's traveling
+Industrial Safety, and fabrication. Enjoys traveling
 and spending time with family and puppies. Favorite
 things to do outside quarantine are going to Disney
 parks and playing Magic the Gathering.
