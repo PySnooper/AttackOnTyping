@@ -1,4 +1,4 @@
-from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points
+from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points, dash_creator
 from gamelogic.gamelogic import GameLogic
 from ascii_art.ascii import game_over_ascii
 import pytest
@@ -24,3 +24,19 @@ def test_print_lives():
 
 def test_print_points():
     pass
+
+
+
+
+
+
+
+
+
+
+
+def test_dash():
+    word = 'This is a test to see how many dashes are created.'
+    actual = dash_creator(word)
+    expected = '----------'
+    assert actual == expected

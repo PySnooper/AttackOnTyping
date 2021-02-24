@@ -23,8 +23,9 @@ def run_app():
         if user_input == 'a':
             game = GameLogic()
             adventure(game)          
-        # if user_input == 'e':
-        #     exhibition()
+        if user_input == 'e':
+            game = GameLogic()
+            exhibition(game)
         if user_input == 'd':
             about_us()   
         if user_input == 'q':
@@ -53,6 +54,7 @@ def adventure(game):
     clear()
     while game.lives > 0 and game.diff:
         play_round(game)
+        # possible single function here:
         if game.points >= game.diff["point_cap"]:
             game.next_diff()
     if game.lives == 0:
@@ -68,7 +70,29 @@ def adventure(game):
     if user_input == 'y':
         game.reset_game()
         adventure(game)
-        
+
+def exhibition(game):
+    clear()
+    print("Choose your difficulty, play till you run out of lives.")
+    user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
+    clear()
+    modes = {'e': game.easy_mode, 'm': game.med_mode, 'h': game.hard_mode, 'x': game.ext_mode}
+    for i in modes:
+        if user_input == i:
+            game.diff = modes[i]
+            while game.lives > 0:
+                play_round(game)
+            print("You gained "
+                + Fore.MAGENTA
+                + str(game.points)
+                + Style.RESET_ALL
+                + " points. \n\nWould you like to play again?\n")
+            user_input = input('(Y)es or (N)o \n\n> ').lower()
+            if user_input == 'y':
+                game.lives = 3
+                game.points = 0
+                exhibition(game)
+
 def play_round(game):
         timekeeper = Timer()
         text = game.get_text()
@@ -81,11 +105,12 @@ def play_round(game):
     
         print(f'You will have {game.diff["seconds"]} seconds to type what you see next. \n')
 
-        dash_creator = lambda: print("-" * len(text)) # restrict this to a certain amount during extreme mode
+        # I made dash_creator outside this function for the single use rule
+        # dash_creator = lambda: print("-" * len(text)) # restrict this to a certain amount during extreme mode
         input('Press enter to begin\n')
-        dash_creator()
+        print(dash_creator(text))
         print(Fore.CYAN + text + Style.RESET_ALL)
-        dash_creator()
+        print(dash_creator(text))
         timekeeper.start()
         answer = input('\n> ')
         time_stop = timekeeper.stop()
@@ -103,7 +128,6 @@ def play_round(game):
                 print('')
                 input('Press enter for next round.')
                 clear()
-
         else:
             game.points += game.diff["points_per"]
             print(f'Great work! You have {game.points} points! \n')
@@ -178,6 +202,14 @@ def print_points(game):
         + Fore.MAGENTA 
         + str(game.points) 
         + Style.RESET_ALL)
+
+def dash_creator(text):
+    if len(text) > 10:
+        to_print = ("-" * 10)
+        return to_print
+    to_print = ("-" * len(text))
+    return to_print
+
 
 if __name__ == '__main__':
     run_app()
