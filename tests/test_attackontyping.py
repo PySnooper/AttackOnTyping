@@ -1,4 +1,4 @@
-from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points, dash_creator, check_points, print_about_menu
+from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points, dash_creator, check_points, print_about_menu, print_great_work
 import io
 import sys 
 from gamelogic.gamelogic import GameLogic
@@ -67,6 +67,12 @@ def test_print_about_menu(devs, capsys):
     assert len(captured.out) == 93
 
 
+def test_print_great_work(game, capsys):
+    print_great_work(game)
+    captured = capsys.readouterr()
+    assert len(captured.out) == 42
+
+
 def test_run_app(mocker):
     # '' Press enter at welcome
     # 'r' Go to rules
@@ -83,6 +89,21 @@ def test_run_app(mocker):
         run_app()
 
 
+def test_run_adventure_fail(mocker):
+    user_inputs = ['', 'a', '', '', '', '', '', '', '', '', '', 'q']
+
+    with pytest.raises(SystemExit):
+        mocker.patch('builtins.input', side_effect=user_inputs)
+        run_app()
+
+def test_run_exhibition_fail(mocker):
+    user_inputs = ['', 'e', 'x', '', '', '', '', '', '', '', '', '', 'q']
+
+    with pytest.raises(SystemExit):
+        mocker.patch('builtins.input', side_effect=user_inputs)
+        run_app()
+
+
 @pytest.fixture()
 def devs():
     return {
@@ -91,3 +112,7 @@ def devs():
         '3': {'name': 'Logan Jones', 'method': logan},
         '4': {'name': 'Nebiuy Kifle', 'method': nebiyu}
         }
+
+@pytest.fixture()
+def game():
+    return GameLogic()

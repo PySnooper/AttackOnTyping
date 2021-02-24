@@ -64,11 +64,13 @@ def menu():
 def adventure(game):
     clear()
     while game.lives > 0 and game.diff:
+        clear()
         play_round(game)
         check_points(game)
     if game.lives == 0:
         game_over_ascii()
     else:
+        clear()
         print(you_win_ascii())
         print("You gained "
         + Fore.MAGENTA
@@ -90,6 +92,7 @@ def exhibition(game):
         if user_input == i:
             game.diff = modes[i]
             while game.lives > 0:
+                clear()
                 play_round(game)
             print("You gained "
                 + Fore.MAGENTA
@@ -121,7 +124,7 @@ def play_round(game):
         answer = input('\n> ')
         time_stop = timekeeper.stop()
         color = Fore.GREEN if answer == text else Fore.RED
-        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed: "
+        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed:\n"
             + color
             + (answer or 'None')
             + Style.RESET_ALL)
@@ -136,7 +139,16 @@ def play_round(game):
                 clear()
         else:
             game.points += game.diff["points_per"]
-            print(f'Great work! You have {game.points} points! \n')
+            print_great_work(game)
+            input('Press enter to continue\n')
+
+
+def print_great_work(game):
+    print('\nGreat work! You have '
+        + Fore.MAGENTA
+        + str(game.points)
+        + Style.RESET_ALL
+        + ' points!\n')
 
 
 def game_over(game):
