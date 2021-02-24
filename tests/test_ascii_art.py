@@ -68,7 +68,7 @@ def test_rules_art_ascii():
 
 def test_thanks_ascii():
     actual = len(thanks())
-    expected = 1263
+    expected = 1264
     assert actual == expected
 
 def test_you_win_ascii():
