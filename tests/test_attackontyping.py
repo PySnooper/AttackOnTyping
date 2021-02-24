@@ -1,4 +1,6 @@
 from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points, dash_creator, check_points
+import io
+import sys 
 from gamelogic.gamelogic import GameLogic
 from ascii_art.ascii import game_over_ascii
 import pytest
@@ -15,34 +17,27 @@ def test_game_over(capsys):
     captured = capsys.readouterr()
     assert captured.out == game_over_ascii() + "\n"
 
-# Start here please:
-# def test_rules(capsys):
-#     pass
-
-# def test_print_lives():
-#     pass
-
-# def test_print_points():
-#     pass
+def test_rules(monkeypatch):
+    # print_rules()
+    input_mock = StringIO('\n')
+    monkeypatch.setattr('sys.stdin', input_mock)
+    expected ='Adventure Mode:'
+    assert print_rules() == ''
 
 
+def test_print_lives(capsys):
+    game = GameLogic()
+    print_lives(game)
+    captured = capsys.readouterr()
+    expected = '♥'
+    assert expected in captured.out
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def test_print_points(capsys):
+    game = GameLogic()
+    print_points(game)
+    captured = capsys.readouterr()
+    expected = 'POINTS'
+    assert expected in captured.out 
 
 
 def test_check_points():
@@ -64,3 +59,4 @@ def test_dash2():
     actual = dash_creator(word)
     expected = '--------------'
     assert actual == expected
+
