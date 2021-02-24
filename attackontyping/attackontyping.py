@@ -2,300 +2,231 @@ import time
 import random
 import os
 import pyfiglet
+from gamelogic.gamelogic import GameLogic
 from colorama import Fore, Back, Style
-from random_text.random_text import RandomText
 from timer.timer import Timer
-from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii
 from about.about import logan, anthony, nick, nebiyu
 
-clear = lambda: os.system('clear')
 
-class Game:
+def clear(): return os.system('clear')
 
-    def __init__(self):
-        self.lives = 3
-        self.points = 0
-        self.easy_mode = {"descr": "EASY MODE", "words": 1, "seconds": "15", "struct": "words"}
-        self.med_mode = {"descr": "MEDIUM MODE", "words": 3, "seconds": "10", "struct": "words"}
-        self.hard_mode = {"descr": "HARD MODE", "words": 3, "seconds": "20", "struct": "sentences", "sentences" : 1}
-        self.ext_mode = {"descr": "EXTREME MODE", "words": 4, "seconds": "25", "struct": "sentences", "sentences" : 3}
-        self.lud_mode = {"descr": "LUDACRIS MODE", "words": 10, "seconds": "60", "struct": "sentences", "sentences" : 10}
 
-    def reset_game(self):
-        self.lives = 3
-        self.points = 0
+devs = {
+    '1': {'name': 'Anthony Beaver', 'method': anthony},
+    '2': {'name': 'Nick Dorkins', 'method': nick},
+    '3': {'name': 'Logan Jones', 'method': logan},
+    '4': {'name': 'Nebiuy Kifle', 'method': nebiyu}
+}
 
-    @staticmethod
-    def print_welcome():
-        clear()
-        print(welcome_message())
 
-    @staticmethod
-    def thanks_for_playing():
-        clear()
-        print(thanks())
-        exit()
-
-    def start_app(self):
-        clear()
-        self.print_welcome()
-        time.sleep(1)
-        input('Press enter to begin.')
-        clear()
-        self.menu_selection()
-
-    def menu_selection(self):
-        clear()
-        print("Welcome to " 
-            + Fore.GREEN 
-            + "Attack "
-            + Fore.RED 
-            + "on "
-            + Fore.BLUE 
-            + "Typing"
-            + Style.RESET_ALL
-            + "!\n")
-        play = 'Would you like to: \n\n(A)dventure Mode \n(E)xhibition Mode \n(R)ead the rules \n(D)ev Bios \n(Q)uit'
-        user_input = input(play + '\n\n'+ '> ').lower()
-        
+def run_app():
+    clear()
+    print(welcome_message())
+    input('Press enter to begin.')
+    clear()
+    while True:
+        user_input = menu()
         if user_input == 'r':
-            self.rules()
+            print_rules()
         if user_input == 'a':
-            self.play_game()
+            game = GameLogic()
+            adventure(game)          
         if user_input == 'e':
-            self.exhibition_game()
+            game = GameLogic()
+            exhibition(game)
         if user_input == 'd':
-            self.about_us()
+            about_us()
         if user_input == 'q':
-            self.thanks_for_playing()
-        self.menu_selection()
-
-    def rules(self):
-        clear()
-        print(rules_art())
-
-        print(Fore.YELLOW 
-        + "Adventure Mode:\n"
-        + Style.RESET_ALL
-        + "This console typing game app to bringing you high quality, \nfun and interactive free typing games, our typing game has \nfour difficulty levels starting from easy mode – extreme mode \nit grows up progressively. The game also has real time scoreboard, \nand you can always see where you are at which mode. \n\nYou motivate some to type faster, type more accurately, and enjoy playing our typing games!!" + 
-        "\n\n- The game has 4 different difficulty levels easy-mode, medium-mode, hard-mode, and extremely-mode. Each level has 3 lives." + 
-        "\n\n- Player has access to choose and play any difficulty level." + 
-        "\n\n- If the player types and finished the words 3 times under each level at a given second got the score and transfer the next difficulty level. If not, the player gets a chance to play again." + 
-        "\n\n- Every player has always can see the score, lives and difficulty level too. \n\n")
-
-        # print(Fore.YELLOW 
-        # + "Adventure Mode:\n"
-        # + Style.RESET_ALL
-        # + "Progress through Easy, Medium, Hard, and Extreme\ndifficulties by typing text as fast as you can! \nYou'll start with 3 lives which are lost if you type incorrectly or run out of time. \n\n")
-        
-        # print(Fore.MAGENTA
-        # + "Exhibition Mode:\n"
-        # + Style.RESET_ALL
-        # + "Start your game at a specific difficulty and play that difficulty until you run out of lives!")
-        input("\nPress enter to go back")
-        self.menu_selection()
-
-    def end_round(self, user_time, time_allowed, points):
-        if user_time < time_allowed:
-            self.points += points
-            print(f'Great work! You have {self.points} points! \n')
-            print('Get ready for the next round!\n')
-            time.sleep(2)
             clear()
-        else:
-            print('')
-            self.lives -= 1
-            if self.lives > 0:
-                print('Try again')
-                self.print_lives()
-                print('')
-                time.sleep(2)
-                clear()
+            print(thanks())
+            exit()
 
-    def play_game(self):
+
+def menu():
+    clear()
+    print("Welcome to "
+          + Fore.GREEN
+          + "Attack "
+          + Fore.RED
+          + "on "
+          + Fore.BLUE
+          + "Typing"
+          + Style.RESET_ALL
+          + "!\n")
+    play = 'Would you like to: \n\n(A)dventure Mode \n(E)xhibition Mode \n(R)ead the rules \n(D)ev Bios \n(Q)uit'
+    user_input = input(play + '\n\n' + '> ').lower()
+    while user_input not in ['r', 'a', 'e', 'd', 'q']:
+        user_input = menu()
+    return user_input
+
+
+def adventure(game):
+    clear()
+    while game.lives > 0 and game.diff:
         clear()
-        self.reset_game()
-        while self.points < 20 and self.lives > 0:
-            user_time = self.start_round(self.easy_mode)
-            # Easy mode: time allowed is 10, points per round 5
-            self.end_round(user_time, 15, 10)
-
-        while self.points < 40 and self.lives > 0:
-            # Med round: time allowed is 10, points per round 10
-            user_time = self.start_round(self.med_mode)
-            self.end_round(user_time, 10, 10)
-
-        while self.points < 60 and self.lives > 0:
-            user_time = self.start_round(self.hard_mode)
-            self.end_round(user_time, 20, 10)
-
-        while self.points >= 60 and self.lives > 0:
-            user_time = self.start_round(self.ext_mode)
-            self.end_round(user_time, 25, 10)
-            
-        self.game_over(self.play_game)
-    
-    def game_over(self, game_func):
+        play_round(game)
+        check_points(game)
+    if game.lives == 0:
+        user_input = game_over(game)
+    else:
         clear()
-        print(game_over_ascii())
+        print(you_win_ascii())
         print("You gained "
         + Fore.MAGENTA
-        + str(self.points)
+        + str(game.points)
         + Style.RESET_ALL
         + " points. \n\nWould you like to try again?\n")
         user_input = input('(Y)es or (N)o \n\n> ').lower()
-        if user_input == 'y':
-            game_func()
-        if user_input == 'n':
-            self.menu_selection()
+    if user_input == 'y':
+        game.reset_game()
+        adventure(game)
 
-    def exhibition_game(self):
-        clear()
-        self.reset_game()
-        print('Here you will play one difficulty until you\'re out of lives. \n')
 
-        user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
-        clear()
-        print('Play until you run out of lives.')
-        if user_input == 'e':
-            while self.lives > 0:
-                user_time = self.start_round(self.easy_mode)
-                self.end_round(user_time, 15, 10)   
-            self.game_over(self.exhibition_game)
-        if user_input == 'm':
-            while self.lives > 0:
-                user_time = self.start_round(self.med_mode)
-                self.end_round(user_time, 10, 10)  
-            self.game_over(self.exhibition_game) 
-        if user_input == 'h':
-            while self.lives > 0:
-                user_time = self.start_round(self.hard_mode)
-                self.end_round(user_time, 20, 10)
-            self.game_over(self.exhibition_game)
-        if user_input == 'x':
-            while self.lives > 0:
-                user_time = self.start_round(self.ext_mode)
-                self.end_round(user_time, 25, 10)
-            self.game_over(self.exhibition_game)
-        if user_input == 'l':
-            while self.lives > 0:
-                user_time = self.start_round(self.lud_mode)
-                self.end_round(user_time, 60, 50)
-            self.game_over(self.exhibition_game)
-        if user_input == 'r':
-            self.menu_selection()
-        
-    @staticmethod
-    def print_hard_ascii():
-        print('********************************************')
-        print(Fore.YELLOW 
-            + 'You now have capital letters and punctuation'
-            + Style.RESET_ALL )
-        print('********************************************\n')
+def exhibition(game):
+    clear()
+    print("Choose your difficulty, play till you run out of lives.")
+    user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
+    clear()
+    modes = {'e': game.easy_mode, 'm': game.med_mode, 'h': game.hard_mode, 'x': game.ext_mode}
+    for i in modes:
+        if user_input == i:
+            game.diff = modes[i]
+            while game.lives > 0:
+                clear()
+                play_round(game)
+            user_input = game_over(game)
+            if user_input == 'y':
+                game.reset_game()
+                exhibition(game)
 
-    @staticmethod
-    def print_ext_ascii():
-        print('***********************************************************************')
-        print(Fore.YELLOW 
-            + 'You now have capital letters, punctuation, and random length sentences!'
-            + Style.RESET_ALL)
-        print('***********************************************************************\n')
-    
-    def start_round(self, mode):
+
+def play_round(game):
         timekeeper = Timer()
-        text = RandomText()
-        if mode["struct"] == 'words':
-            question = text.get_words(mode["words"])
-        if mode["struct"] == 'sentences':
-            question = text.get_sentences(mode["sentences"], mode["words"], True)
-        if mode["descr"] == "HARD MODE":
-                self.print_hard_ascii()
-        if mode["descr"] == "EXTREME MODE":
-            self.print_ext_ascii()
-
-        self.print_lives()
-        self.print_points()
-        if mode['descr'] == 'EASY MODE':
-            print(easy_ascii())
-        if mode['descr'] == 'MEDIUM MODE':
-            print(med_ascii())
-        if mode['descr'] == 'HARD MODE':
-            print(hard_ascii())
-        if mode['descr'] == 'EXTREME MODE':
-            print(ext_ascii())
-
-        print(f'You will have {mode["seconds"]} seconds to type what you see next. \n')
-
-        dash_creator = lambda: print("-" * len(question))
+        text = game.get_text()
+        if game.diff["warning"]:
+            print(game.diff["warning"])
+        
+        print_lives(game)
+        print_points(game)
+        print(game.diff["ascii"]())
+    
+        print(f'You will have {game.diff["seconds"]} seconds to type what you see next. \n')
         input('Press enter to begin\n')
-        dash_creator()
-        print(Fore.CYAN + question + Style.RESET_ALL)
-        dash_creator()
+        print(dash_creator(text))
+        print(Fore.CYAN + text + Style.RESET_ALL)
+        print(dash_creator(text))
         timekeeper.start()
         answer = input('\n> ')
         time_stop = timekeeper.stop()
-        color = Fore.GREEN if answer == question else Fore.RED
-        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed: "
+        color = Fore.GREEN if answer == text else Fore.RED
+        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed:\n"
             + color
             + (answer or 'None')
             + Style.RESET_ALL)
-        if answer != question:
-            time_stop = 100
-            return time_stop
-        return time_stop
-
-    def about_us(self):
-        option = None
-        clear()
-        print(dev_menu_art())
-
-        def about_us_menu():
-            print("(1) Anthony Beaver")
-            print("(2) Nick Dorkins")
-            print("(3) Logan Jones")
-            print("(4) Nebiuy Kifle")
-            print("(0) Go to game page")
-            option = input("\nSelect a developer:\n> ")
-            
-            if option == '1':
+        if answer != text or time_stop > game.diff["seconds"]:
+            print('')
+            game.lives -= 1
+            if game.lives > 0:
+                print('Try again')
+                print_lives(game)
+                print('')
+                input('Press enter for next round.')
                 clear()
-                anthony()
-                print('\n')
-                about_us_menu()
-            elif option == '2':
-                clear()
-                nick()
-                print('\n')
-                about_us_menu()
-            elif option == '3':
-                clear()
-                logan()
-                print('\n')
-                about_us_menu()
-            elif option == '4':
-                clear()
-                nebiyu()
-                print('\n')
-                about_us_menu()
-            elif option == '0':
-                self.menu_selection()
-            else:
-                self.about_us()
+        else:
+            game.points += game.diff["points_per"]
+            print_great_work(game)
+            input('Press enter to continue\n')
 
-        about_us_menu()
 
-    def print_lives(self):
-        print('LIVES: ' 
-            + Fore.RED 
-            + f'{lives() * self.lives}' 
-            + Style.RESET_ALL)
+def print_great_work(game):
+    print('\nGreat work! You have '
+        + Fore.MAGENTA
+        + str(game.points)
+        + Style.RESET_ALL
+        + ' points!\n')
 
-    def print_points(self):
-        print('POINTS: ' 
-            + Fore.MAGENTA 
-            + str(self.points) 
-            + Style.RESET_ALL)
+
+def game_over(game):
+    clear()
+    print(game_over_ascii())
+    print("You gained "
+    + Fore.MAGENTA
+    + str(game.points)
+    + Style.RESET_ALL
+    + " points. \n\nWould you like to play again?\n")
+    return input('(Y)es or (N)o \n\n> ').lower()
+
+
+def about_us():
+    clear()
+    print(dev_menu_art())
+
+    def about_menu_selection():
+        print_about_menu(devs)
+        option = input("\nSelect a developer:\n> ")
+
+        if option in devs.keys():
+            print_method = devs[option]['method']
+            clear()
+            print_method()
+            about_menu_selection()
+        elif option == '0':
+            return
+        else:
+            about_us()
+    about_menu_selection()
+
+
+def print_about_menu(devs):
+    for (key, value) in devs.items():
+        print(f'({key})', value['name'])
+    print("(0) Return to main menu")
+
+
+def print_rules():
+    clear()
+    print(rules_art())
+
+    print(Fore.YELLOW
+          + "Adventure Mode:\n"
+          + Style.RESET_ALL
+          + "This console typing game app to bringing you high quality, \nfun and interactive free typing games, our typing game has \nfour difficulty levels starting from easy mode – extreme mode \nit grows up progressively. The game also has real time scoreboard, \nand you can always see where you are at which mode. \n\nYou motivate some to type faster, type more accurately, and enjoy playing our typing games!!" +
+          "\n\n- The game has 4 different difficulty levels easy-mode, medium-mode, hard-mode, and extremely-mode. Each level has 3 lives." +
+          "\n\n- Player has access to choose and play any difficulty level." +
+          "\n\n- If the player types and finished the words 3 times under each level at a given second got the score and transfer the next difficulty level. If not, the player gets a chance to play again." +
+          "\n\n- Every player has always can see the score, lives and difficulty level too. \n\n")
+    user_input = input("\nPress enter to go back")
+    return user_input
+
+
+def print_lives(game):
+    print('LIVES: '
+          + Fore.RED
+          + f'{lives() * game.lives}'
+          + Style.RESET_ALL)
+
+
+def print_points(game):
+    print('POINTS: '
+          + Fore.MAGENTA
+          + str(game.points)
+          + Style.RESET_ALL)
+
+
+def dash_creator(text):
+    if len(text) > 70:
+        to_print = ("-" * 70)
+        return to_print
+    to_print = ("-" * len(text))
+    return to_print
+
+
+def check_points(game):
+    if game.points >= game.diff["point_cap"]:
+        game.next_diff()
+    return game
+
 
 if __name__ == '__main__':
-    game = Game()
-    game.start_app()
+    run_app()
