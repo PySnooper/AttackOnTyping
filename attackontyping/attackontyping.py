@@ -54,9 +54,10 @@ def adventure(game):
     clear()
     while game.lives > 0 and game.diff:
         play_round(game)
+        check_points(game)
         # possible single function here:
-        if game.points >= game.diff["point_cap"]:
-            game.next_diff()
+        # if game.points >= game.diff["point_cap"]:
+        #     game.next_diff()
     if game.lives == 0:
         game_over_ascii()
     else:
@@ -204,11 +205,16 @@ def print_points(game):
         + Style.RESET_ALL)
 
 def dash_creator(text):
-    if len(text) > 10:
-        to_print = ("-" * 10)
+    if len(text) > 20:
+        to_print = ("-" * 20)
         return to_print
     to_print = ("-" * len(text))
     return to_print
+
+def check_points(game):
+    if game.points >= game.diff["point_cap"]:
+        game.next_diff()
+    return game
 
 
 if __name__ == '__main__':
