@@ -1,6 +1,6 @@
 import io
 import sys 
-from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, lud_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, lud_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii
 import pytest
 
 
@@ -69,6 +69,11 @@ def test_rules_art_ascii():
 def test_thanks_ascii():
     actual = len(thanks())
     expected = 1263
+    assert actual == expected
+
+def test_you_win_ascii():
+    actual = len(you_win_ascii())
+    expected = 661
     assert actual == expected
 
 # @pytest.fixture
