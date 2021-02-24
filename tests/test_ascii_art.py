@@ -75,8 +75,3 @@ def test_you_win_ascii():
     actual = len(you_win_ascii())
     expected = 661
     assert actual == expected
-
-# @pytest.fixture
-
-
-

@@ -68,7 +68,7 @@ def adventure(game):
         play_round(game)
         check_points(game)
     if game.lives == 0:
-        game_over_ascii()
+        user_input = game_over(game)
     else:
         clear()
         print(you_win_ascii())
@@ -77,10 +77,11 @@ def adventure(game):
         + str(game.points)
         + Style.RESET_ALL
         + " points. \n\nWould you like to try again?\n")
-    user_input = input('(Y)es or (N)o \n\n> ').lower()
+        user_input = input('(Y)es or (N)o \n\n> ').lower()
     if user_input == 'y':
         game.reset_game()
         adventure(game)
+
 
 def exhibition(game):
     clear()
@@ -94,16 +95,11 @@ def exhibition(game):
             while game.lives > 0:
                 clear()
                 play_round(game)
-            print("You gained "
-                + Fore.MAGENTA
-                + str(game.points)
-                + Style.RESET_ALL
-                + " points. \n\nWould you like to play again?\n")
-            user_input = input('(Y)es or (N)o \n\n> ').lower()
+            user_input = game_over(game)
             if user_input == 'y':
-                game.lives = 3
-                game.points = 0
+                game.reset_game()
                 exhibition(game)
+
 
 def play_round(game):
         timekeeper = Timer()
@@ -154,6 +150,12 @@ def print_great_work(game):
 def game_over(game):
     clear()
     print(game_over_ascii())
+    print("You gained "
+    + Fore.MAGENTA
+    + str(game.points)
+    + Style.RESET_ALL
+    + " points. \n\nWould you like to play again?\n")
+    return input('(Y)es or (N)o \n\n> ').lower()
 
 
 def about_us():
@@ -218,6 +220,7 @@ def dash_creator(text):
         return to_print
     to_print = ("-" * len(text))
     return to_print
+
 
 def check_points(game):
     if game.points >= game.diff["point_cap"]:

@@ -26,6 +26,3 @@ def test_nick(capsys):
     captured = capsys.readouterr()
     expected = 'Nick Dorkins'
     assert expected in captured.out
-
-
-
