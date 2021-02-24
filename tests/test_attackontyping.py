@@ -11,14 +11,12 @@ def test_menu(mocker):
     mocker.patch('builtins.input', side_effect=['z','a'])
     assert menu() == 'a'
 
-def test_game_over(capsys):
-    game = GameLogic()
-    game_over(game)
-    captured = capsys.readouterr()
-    assert captured.out == game_over_ascii() + "\n"
+def test_game_over(monkeypatch, game):
+    input_mock = StringIO('n')
+    monkeypatch.setattr('sys.stdin', input_mock)
+    assert game_over(game) == 'n'
 
 def test_rules(monkeypatch):
-    # print_rules()
     input_mock = StringIO('\n')
     monkeypatch.setattr('sys.stdin', input_mock)
     expected ='Adventure Mode:'
