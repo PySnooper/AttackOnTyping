@@ -5,7 +5,7 @@ import pyfiglet
 from gamelogic.gamelogic import GameLogic
 from colorama import Fore, Back, Style
 from timer.timer import Timer
-from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii
 from about.about import logan, anthony, nick, nebiyu
 
 
@@ -31,9 +31,10 @@ def run_app():
             print_rules()
         if user_input == 'a':
             game = GameLogic()
-            adventure(game)
-        # if user_input == 'e':
-        #     exhibition()
+            adventure(game)          
+        if user_input == 'e':
+            game = GameLogic()
+            exhibition(game)
         if user_input == 'd':
             about_us()
         if user_input == 'q':
@@ -64,65 +65,78 @@ def adventure(game):
     clear()
     while game.lives > 0 and game.diff:
         play_round(game)
-        if game.points >= game.diff["point_cap"]:
-            game.next_diff()
+        check_points(game)
     if game.lives == 0:
         game_over_ascii()
     else:
-        print('You win!')  # add a you win ascii
-    print("You gained "
-          + Fore.MAGENTA
-          + str(game.points)
-          + Style.RESET_ALL
-          + " points. \n\nWould you like to try again?\n")
+        print(you_win_ascii())
+        print("You gained "
+        + Fore.MAGENTA
+        + str(game.points)
+        + Style.RESET_ALL
+        + " points. \n\nWould you like to try again?\n")
     user_input = input('(Y)es or (N)o \n\n> ').lower()
     if user_input == 'y':
         game.reset_game()
         adventure(game)
 
+def exhibition(game):
+    clear()
+    print("Choose your difficulty, play till you run out of lives.")
+    user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
+    clear()
+    modes = {'e': game.easy_mode, 'm': game.med_mode, 'h': game.hard_mode, 'x': game.ext_mode}
+    for i in modes:
+        if user_input == i:
+            game.diff = modes[i]
+            while game.lives > 0:
+                play_round(game)
+            print("You gained "
+                + Fore.MAGENTA
+                + str(game.points)
+                + Style.RESET_ALL
+                + " points. \n\nWould you like to play again?\n")
+            user_input = input('(Y)es or (N)o \n\n> ').lower()
+            if user_input == 'y':
+                game.lives = 3
+                game.points = 0
+                exhibition(game)
 
 def play_round(game):
-    timekeeper = Timer()
-    text = game.get_text()
-    if game.diff["warning"]:
-        print(game.diff["warning"])
-
-    print_lives(game)
-    print_points(game)
-    print(game.diff["ascii"]())
-
-    print(
-        f'You will have {game.diff["seconds"]} seconds to type what you see next. \n')
-
-    # restrict this to a certain amount during extreme mode
-    def dash_creator(): return print("-" * len(text))
-    input('Press enter to begin\n')
-    dash_creator()
-    print(Fore.CYAN + text + Style.RESET_ALL)
-    dash_creator()
-    timekeeper.start()
-    answer = input('\n> ')
-    time_stop = timekeeper.stop()
-    color = Fore.GREEN if answer == text else Fore.RED
-    print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed: "
-          + color
-          + (answer or 'None')
-          + Style.RESET_ALL)
-    if answer != text or time_stop > game.diff["seconds"]:
-        print('')
-        game.lives -= 1
-        if game.lives > 0:
-            print('Try again')
-            print_lives(game)
+        timekeeper = Timer()
+        text = game.get_text()
+        if game.diff["warning"]:
+            print(game.diff["warning"])
+        
+        print_lives(game)
+        print_points(game)
+        print(game.diff["ascii"]())
+    
+        print(f'You will have {game.diff["seconds"]} seconds to type what you see next. \n')
+        input('Press enter to begin\n')
+        print(dash_creator(text))
+        print(Fore.CYAN + text + Style.RESET_ALL)
+        print(dash_creator(text))
+        timekeeper.start()
+        answer = input('\n> ')
+        time_stop = timekeeper.stop()
+        color = Fore.GREEN if answer == text else Fore.RED
+        print(f"\nElapsed time: {time_stop:0.4f} seconds, you typed: "
+            + color
+            + (answer or 'None')
+            + Style.RESET_ALL)
+        if answer != text or time_stop > game.diff["seconds"]:
             print('')
-            input('Press enter for next round.')
-            clear()
-
-    else:
-        game.points += game.diff["points_per"]
-        print(f'Great work! You have {game.points} points! \n')
-        input('Press enter for next round.')
-        clear()
+            game.lives -= 1
+            if game.lives > 0:
+                print('Try again')
+                print_lives(game)
+                print('')
+                input('Press enter for next round.')
+                clear()
+        else:
+            game.points += game.diff["points_per"]
+            print(f'Great work! You have {game.points} points! \n')
 
 
 def game_over(game):
@@ -184,6 +198,19 @@ def print_points(game):
           + Fore.MAGENTA
           + str(game.points)
           + Style.RESET_ALL)
+
+
+def dash_creator(text):
+    if len(text) > 70:
+        to_print = ("-" * 70)
+        return to_print
+    to_print = ("-" * len(text))
+    return to_print
+
+def check_points(game):
+    if game.points >= game.diff["point_cap"]:
+        game.next_diff()
+    return game
 
 
 if __name__ == '__main__':

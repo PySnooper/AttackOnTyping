@@ -1,4 +1,6 @@
-from attackontyping.attackontyping import run_app, menu, game_over, print_rules, print_lives, print_points, print_about_menu, about_us
+from attackontyping.attackontyping import run_app, menu, game_over, about_us, print_rules, print_lives, print_points, dash_creator, check_points, print_about_menu
+import io
+import sys 
 from gamelogic.gamelogic import GameLogic
 from ascii_art.ascii import game_over_ascii, thanks
 from about.about import logan, anthony, nick, nebiyu
@@ -15,15 +17,48 @@ def test_game_over(capsys):
     captured = capsys.readouterr()
     assert captured.out == game_over_ascii() + "\n"
 
-# Start here please:
-def test_rules(capsys):
-    pass
+def test_rules(monkeypatch):
+    # print_rules()
+    input_mock = StringIO('\n')
+    monkeypatch.setattr('sys.stdin', input_mock)
+    expected ='Adventure Mode:'
+    assert print_rules() == ''
 
-def test_print_lives():
-    pass
 
-def test_print_points():
-    pass
+def test_print_lives(capsys):
+    game = GameLogic()
+    print_lives(game)
+    captured = capsys.readouterr()
+    expected = '♥'
+    assert expected in captured.out
+
+def test_print_points(capsys):
+    game = GameLogic()
+    print_points(game)
+    captured = capsys.readouterr()
+    expected = 'POINTS'
+    assert expected in captured.out 
+
+
+def test_check_points():
+    game = GameLogic()
+    game.points = 20
+    returned_game = check_points(game)
+    actual = game.diff
+    expected = game.med_mode
+    assert actual == expected
+
+def test_dash():
+    word = 'This is a test to see how many dashes are created. Now how many words are there? No one could tell!'
+    actual = dash_creator(word)
+    expected = '----------------------------------------------------------------------'
+    assert actual == expected
+
+def test_dash2():
+    word = 'This is a test'
+    actual = dash_creator(word)
+    expected = '--------------'
+    assert actual == expected
 
 
 def test_print_about_menu(devs, capsys):
