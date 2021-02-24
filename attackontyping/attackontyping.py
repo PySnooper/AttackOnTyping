@@ -5,7 +5,7 @@ import pyfiglet
 from gamelogic.gamelogic import GameLogic
 from colorama import Fore, Back, Style
 from timer.timer import Timer
-from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii
 from about.about import logan, anthony, nick, nebiyu
 
 clear = lambda: os.system('clear')
@@ -58,8 +58,8 @@ def adventure(game):
     if game.lives == 0:
         game_over_ascii()
     else:
-        print('You win!') # add a you win ascii
-    print("You gained "
+        print(you_win_ascii()) # add a you win ascii
+        print("You gained "
         + Fore.MAGENTA
         + str(game.points)
         + Style.RESET_ALL
@@ -181,3 +181,4 @@ def print_points(game):
 
 if __name__ == '__main__':
     run_app()
+    
