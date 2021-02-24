@@ -32,6 +32,19 @@ def test_game_over(capsys):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def test_check_points():
     game = GameLogic()
     game.points = 20
