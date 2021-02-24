@@ -54,9 +54,9 @@ def test_check_points():
     assert actual == expected
 
 def test_dash():
-    word = 'This is a test to see how many dashes are created.'
+    word = 'This is a test to see how many dashes are created. Now how many words are there? No one could tell!'
     actual = dash_creator(word)
-    expected = '--------------------'
+    expected = '----------------------------------------------------------------------'
     assert actual == expected
 
 def test_dash2():

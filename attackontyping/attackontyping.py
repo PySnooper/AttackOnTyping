@@ -205,8 +205,8 @@ def print_points(game):
         + Style.RESET_ALL)
 
 def dash_creator(text):
-    if len(text) > 20:
-        to_print = ("-" * 20)
+    if len(text) > 70:
+        to_print = ("-" * 70)
         return to_print
     to_print = ("-" * len(text))
     return to_print
