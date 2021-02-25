@@ -30,11 +30,9 @@ def run_app():
         if user_input == 'r':
             print_rules()
         if user_input == 'a':
-            game = GameLogic()
-            adventure(game)          
+            adventure()          
         if user_input == 'e':
-            game = GameLogic()
-            exhibition(game)
+            exhibition()
         if user_input == 'd':
             about_us()
         if user_input == 'q':
@@ -61,8 +59,9 @@ def menu():
     return user_input
 
 
-def adventure(game):
+def adventure(game=None):
     clear()
+    game = game or GameLogic()
     while game.lives > 0 and game.diff:
         clear()
         play_round(game)
@@ -83,12 +82,13 @@ def adventure(game):
         adventure(game)
 
 
-def exhibition(game):
+def exhibition(game=None):
     clear()
+    game = game or GameLogic()
     print("Choose your difficulty, play till you run out of lives.")
     user_input = input('Would you like to play \n(E)asy \n(M)edium \n(H)ard \n(X)treme \n(R)eturn to main menu \n> ').lower()
     clear()
-    modes = {'e': game.easy_mode, 'm': game.med_mode, 'h': game.hard_mode, 'x': game.ext_mode}
+    modes = {'e': game.easy_mode, 'm': game.med_mode, 'h': game.hard_mode, 'x': game.ext_mode, 'roger': game.roger_mode}
     for i in modes:
         if user_input == i:
             game.diff = modes[i]
