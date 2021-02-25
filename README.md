@@ -20,6 +20,35 @@
 
 ---
 
+## How to get started:
+
+- Clone [Attack on Typing](https://github.com/PySnooper/AttackOnTyping.git) repository to your local machine
+    ```
+    $ git clone https://github.com/PySnooper/AttackOnTyping.git
+    ```
+
+- In your CLI change directories into the AttackOnTyping directory
+    ```
+     $ cd AttackOnTyping
+    ```
+- Once inside run a "poetry install" to install dependencies 
+    ```
+    $ poetry install
+    ```
+- After dependencies install you are going to change to the attackontyping directory
+     ```
+     $ cd attackontyping
+    ```
+- Once inside the attackontyping directory you are going to start the application
+    ```
+    $ python attackontyping.py
+    ```
+- Once the application loads, follow the prompts on the screen and enjoy!
+
+
+
+---
+
 ## User Stories
 
 | User Story: | Developer Expectations: | Acceptance Tests: |
