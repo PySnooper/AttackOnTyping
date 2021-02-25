@@ -1,6 +1,6 @@
 import io
 import sys 
-from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, lud_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii
+from ascii_art.ascii import welcome_message, lives, easy_ascii, med_ascii, hard_ascii, ext_ascii, game_over_ascii, dev_menu_art, rules_art, thanks, you_win_ascii, roger_ascii
 import pytest
 
 
@@ -42,9 +42,9 @@ def test_ext_ascii():
     assert actual == expected
 
 
-def test_lud_ascii():
-    actual = len(lud_ascii())
-    expected = 490
+def test_roger_ascii():
+    actual = len(roger_ascii())
+    expected = 412
     assert actual == expected
 
 

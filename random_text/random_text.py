@@ -7,7 +7,7 @@ class RandomText:
         self.fake = Faker()
 
 
-    def get_words(self, word_count):
+    def get_words(self, word_count, custom_words=None):
         """[Take in a word Count creates a series of random strings to be returned.]
 
         Args:
@@ -16,12 +16,12 @@ class RandomText:
         Returns:
             [str]: [Series of random strings based on the word_count input.]
         """        
-        word_list = self.fake.words(nb=word_count, unique=True)
+        word_list = self.fake.words(nb=word_count, unique=True, ext_word_list=custom_words)
         words = ' '.join(word_list)
         return words
 
 
-    def get_sentences(self, sentence_count, word_count, variable=False):
+    def get_sentences(self, sentence_count, word_count, variable=False, custom_words=None):
 
         """[Take in a sentence_count and word_count to create a series of random strings and sentences to be returned, with capital letters and punctuation.]
 
@@ -34,6 +34,6 @@ class RandomText:
         """        
         sentences = []
         for _ in range(sentence_count):
-            sentences.append(self.fake.sentence(nb_words=word_count, variable_nb_words=variable))
+            sentences.append(self.fake.sentence(nb_words=word_count, variable_nb_words=variable, ext_word_list=custom_words))
         text = ' '.join(sentences)
         return text

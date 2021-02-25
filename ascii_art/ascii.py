@@ -49,8 +49,8 @@ def hard_ascii():
 def ext_ascii():
     return("*********************************************************\n" + Fore.MAGENTA + pyfiglet.figlet_format("EXTREME ! !", 'slant') + Style.RESET_ALL + "*********************************************************")
 
-def lud_ascii():
-    return("*********************************************************\n" + Fore.RED + pyfiglet.figlet_format("LUDACRIS ! !", 'slant') + Style.RESET_ALL + "*********************************************************")
+def roger_ascii():
+    return("*********************************************************\n" + Fore.MAGENTA + pyfiglet.figlet_format("ROGER ? !", 'slant') + Style.RESET_ALL + "*********************************************************")
 
 def game_over_ascii():
     return(Fore.RED +"""
@@ -101,7 +101,6 @@ def thanks():
                                                  
 
     """ + Style.RESET_ALL)
-thanks()
 
 def you_win_ascii():
     return(Fore.YELLOW + """\
@@ -119,4 +118,3 @@ def you_win_ascii():
     ╚███╔███╔╝██║██║ ╚████║    ██╗    ██╗    ██╗   
      ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝    ╚═╝    ╚═╝    ╚═╝   
     """ + Style.RESET_ALL)  
-you_win_ascii()
